@@ -1174,6 +1174,160 @@ img{max-width:100%;height:auto;}
   .work,.prof-section{padding-left:15px;padding-right:15px;}
   .product-image{height:165px;}
 }
+
+/* ============================================================
+   FINAL MOBILE PRODUCT LAYOUT FIX
+   Product cards/images are ALWAYS one per row on mobile.
+   This override is intentionally last so older responsive rules
+   cannot change the product grid back to two columns.
+   ============================================================ */
+@media (max-width: 760px){
+  #preview.mobile-preview .product-grid,
+  #preview.mobile-preview .product-grid[style]{
+    display:grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    grid-auto-flow: row !important;
+    grid-auto-columns: auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    gap:12px !important;
+  }
+
+  #preview.mobile-preview .product-card{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    grid-column:1 / -1 !important;
+    margin:0 !important;
+  }
+
+  #preview.mobile-preview .product-image{
+    display:grid !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:190px !important;
+    grid-column:1 / -1 !important;
+  }
+
+  #preview.mobile-preview .product-image img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    grid-column:1 / -1 !important;
+  }
+}
+
+/* Generated/downloaded portfolio: one product per row on phones. */
+@media (max-width: 760px){
+  body .product-grid{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-auto-flow:row !important;
+    width:100% !important;
+  }
+
+  body .product-card{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    grid-column:1 / -1 !important;
+  }
+
+  body .product-image{
+    width:100% !important;
+    max-width:100% !important;
+  }
+
+  body .product-image img{
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+  }
+}
+
+
+/* ============================================================
+   FINAL MOBILE PRODUCT LAYOUT FIX
+   Product cards/images are ALWAYS one per row on mobile.
+   This override is intentionally last so older responsive rules
+   cannot change the product grid back to two columns.
+   ============================================================ */
+@media (max-width: 760px){
+  #preview.mobile-preview .product-grid,
+  #preview.mobile-preview .product-grid[style]{
+    display:grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: none !important;
+    grid-auto-flow: row !important;
+    grid-auto-columns: auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    gap:12px !important;
+  }
+
+  #preview.mobile-preview .product-card{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    grid-column:1 / -1 !important;
+    margin:0 !important;
+  }
+
+  #preview.mobile-preview .product-image{
+    display:grid !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:190px !important;
+    grid-column:1 / -1 !important;
+  }
+
+  #preview.mobile-preview .product-image img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    grid-column:1 / -1 !important;
+  }
+}
+
+/* Generated/downloaded portfolio: one product per row on phones. */
+@media (max-width: 760px){
+  body .product-grid{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-auto-flow:row !important;
+    width:100% !important;
+  }
+
+  body .product-card{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    grid-column:1 / -1 !important;
+  }
+
+  body .product-image{
+    width:100% !important;
+    max-width:100% !important;
+  }
+
+  body .product-image img{
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+  }
+}
+
 </style></head><body>
 <!-- PortfolioForge generated portfolio. Product 1 = 1.png, Product 2 = 2.png, … Product 8 = 8.png. Keep numbered PNG files beside index.html. -->
 <nav aria-label="Primary navigation"><div class="navname">${esc(d.name)}</div><div class="links"><a href="#about">About</a><a href="#work">Work</a><a href="#services">Services</a><a href="#products">Products</a><a href="#contact">Contact</a></div></nav>
