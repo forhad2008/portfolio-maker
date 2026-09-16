@@ -462,6 +462,11 @@ body{overscroll-behavior-x:none;}
   }
 }
 
+/* Product preview window: image only. */
+.product-lightbox-info,.product-lightbox-thumbs,.product-lightbox-main .no-image{display:none!important}
+.product-lightbox-main{font-size:0;line-height:0}
+.product-lightbox-main img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important}
+
 /* Final product card composition: image-led, labeled, responsive. */
 .site #dynamicSections .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important}
 .site #dynamicSections .product-card{min-height:360px!important;padding:24px!important;border-radius:18px!important}
@@ -614,6 +619,35 @@ input:focus,textarea:focus,select:focus{border-color:rgba(45,107,255,.8);box-sha
   #preview.mobile-preview .preview-window{border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 5px rgba(255,255,255,.035);}
 }
 </style>
+
+<style id="portfolioforge-final-product-window">
+/* SIMPLE PRODUCT PREVIEW — image only, matching the reference style. */
+.product-lightbox{padding:0!important;background:rgba(0,0,0,.94)!important;backdrop-filter:blur(10px)!important;-webkit-backdrop-filter:blur(10px)!important;}
+.product-lightbox-window{width:100%!important;height:100%!important;border:0!important;border-radius:0!important;overflow:visible!important;background:transparent!important;box-shadow:none!important;}
+.product-lightbox-close{right:18px!important;top:10px!important;width:48px!important;height:48px!important;border-radius:50%!important;background:transparent!important;color:#fff!important;font-size:34px!important;}
+.product-lightbox-stage{height:100%!important;min-height:0!important;display:grid!important;grid-template-columns:64px minmax(0,1fr) 64px!important;align-items:center!important;gap:10px!important;padding:18px 24px 96px!important;}
+.product-lightbox-main{min-width:0!important;min-height:0!important;height:100%!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+.product-preview-browser{width:auto!important;height:auto!important;min-width:0!important;min-height:0!important;display:block!important;border:0!important;border-radius:0!important;overflow:visible!important;background:transparent!important;box-shadow:none!important;}
+.product-preview-browser-bar{display:none!important;}
+.product-preview-browser-body{position:relative!important;width:min(78vw,700px)!important;height:min(80vh,760px)!important;min-height:0!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important;background:transparent!important;}
+.product-preview-browser-body img{display:block!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;border-radius:0!important;box-shadow:0 24px 80px rgba(0,0,0,.62)!important;}
+.product-preview-browser-body.no-image{background:transparent!important;border:0!important;}
+.no-image-fallback{display:none!important;}
+.product-lightbox-info{display:none!important;}
+.product-lightbox-thumbs{left:0!important;right:0!important;bottom:12px!important;position:absolute!important;flex:0 0 auto!important;width:100%!important;padding:0 74px!important;justify-content:center!important;gap:8px!important;background:transparent!important;border:0!important;z-index:3!important;}
+.product-lightbox-thumb{flex:0 0 72px!important;width:72px!important;height:54px!important;border-radius:5px!important;border:1px solid rgba(255,255,255,.15)!important;background:#10141b!important;opacity:.52!important;overflow:hidden!important;padding:0!important;}
+.product-lightbox-thumb.active,.product-lightbox-thumb:hover{opacity:1!important;border-color:rgba(255,255,255,.9)!important;box-shadow:0 0 0 1px rgba(255,255,255,.35) inset!important;}
+.product-lightbox-thumb img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;}
+.product-lightbox-thumb.thumb-missing{display:none!important;}
+@media(max-width:760px){
+ .product-lightbox-close{right:8px!important;top:4px!important;width:42px!important;height:42px!important;font-size:30px!important;}
+ .product-lightbox-stage{grid-template-columns:38px minmax(0,1fr) 38px!important;gap:4px!important;padding:12px 7px 76px!important;}
+ .product-preview-browser-body{width:min(84vw,560px)!important;height:min(78vh,680px)!important;}
+ .product-lightbox-thumbs{bottom:8px!important;padding:0 42px!important;gap:6px!important;}
+ .product-lightbox-thumb{flex-basis:58px!important;width:58px!important;height:44px!important;}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -702,7 +736,7 @@ input:focus,textarea:focus,select:focus{border-color:rgba(45,107,255,.8);box-sha
       <div id="testimonialsEditor"></div><button class="btn" style="width:100%" id="addTestimonial">＋ Add testimonial</button>
 
       <div class="label">Products / Services for sale — up to 8</div>
-      <div id="productsEditor"></div><button class="btn" style="width:100%" id="addProduct">＋ Add product</button>
+      <div id="productsEditor"></div><button class="btn" style="width:100%" id="addProduct">＋ Add product</button><div class="upload" style="margin-top:8px"><strong>8 product slots · 1.png → 8.png</strong><span>Each product card and its full-screen preview use the same numbered image. Uploaded images are embedded into the exported HTML.</span></div>
 
       <div class="label">FAQ</div>
       <div id="faqEditor"></div><button class="btn" style="width:100%" id="addFaq">＋ Add FAQ</button>
@@ -790,8 +824,6 @@ input:focus,textarea:focus,select:focus{border-color:rgba(45,107,255,.8);box-sha
       <div class="product-lightbox-main" id="productLightboxMain"></div>
       <button class="product-lightbox-arrow" id="productNext" aria-label="Next product">›</button>
     </div>
-    <div class="product-lightbox-info" id="productLightboxInfo"></div>
-    <div class="product-lightbox-thumbs" id="productLightboxThumbs"></div>
   </div>
 </div>
 
@@ -822,14 +854,14 @@ const defaultData={
  certifications:[{title:"Professional Web Development",issuer:"Certification Body",year:"2025"},{title:"Advanced UI/UX Design",issuer:"Design Institute",year:"2024"}],
  testimonials:[{quote:"A thoughtful creative partner who turns complex ideas into polished digital experiences.",name:"Jordan Lee",role:"Founder, Studio"}],
  products:[
-  {title:"Brand Identity Pack",desc:"Logo system, colors, typography and brand guidelines.",price:"$149",image:"",link:"#"},
-  {title:"Portfolio Website",desc:"A responsive portfolio template customized for your personal brand.",price:"$249",image:"",link:"#"},
-  {title:"UI Design System",desc:"Reusable components and patterns for modern digital products.",price:"$199",image:"",link:"#"},
-  {title:"Social Media Kit",desc:"Professional campaign templates for consistent online branding.",price:"$79",image:"",link:"#"},
-  {title:"Landing Page",desc:"Conversion-focused landing page design and development.",price:"$129",image:"",link:"#"},
-  {title:"Motion Pack",desc:"A collection of refined motion assets for web and social.",price:"$99",image:"",link:"#"},
-  {title:"Creative Consultation",desc:"One-to-one strategy session for your next digital project.",price:"$89",image:"",link:"#"},
-  {title:"Custom Project",desc:"A fully tailored creative and development package.",price:"From $299",image:"",link:"#"}
+  {title:"Brand Identity Pack",desc:"Logo system, colors, typography and brand guidelines.",price:"$149",image:"1.png",link:"#"},
+  {title:"Portfolio Website",desc:"A responsive portfolio template customized for your personal brand.",price:"$249",image:"2.png",link:"#"},
+  {title:"UI Design System",desc:"Reusable components and patterns for modern digital products.",price:"$199",image:"3.png",link:"#"},
+  {title:"Social Media Kit",desc:"Professional campaign templates for consistent online branding.",price:"$79",image:"4.png",link:"#"},
+  {title:"Landing Page",desc:"Conversion-focused landing page design and development.",price:"$129",image:"5.png",link:"#"},
+  {title:"Motion Pack",desc:"A collection of refined motion assets for web and social.",price:"$99",image:"6.png",link:"#"},
+  {title:"Creative Consultation",desc:"One-to-one strategy session for your next digital project.",price:"$89",image:"7.png",link:"#"},
+  {title:"Custom Project",desc:"A fully tailored creative and development package.",price:"From $299",image:"8.png",link:"#"}
  ],
  faq:[
   {q:"What type of projects do you take?",a:"I work on websites, product interfaces, branding, portfolios and creative digital experiences."},
@@ -918,8 +950,9 @@ function renderAdvancedEditors(){
    <input placeholder="Image URL (optional)" value="${esc(x.image||"")}" oninput="editAdvanced('products',${i},'image',this.value)">
    <label class="upload" style="cursor:pointer">Upload product image
      <input type="file" accept="image/*" style="display:none" onchange="handleProductImage(${i},this.files[0])">
+     <strong>Product ${i+1} image · ${i+1}.png</strong><span>Upload an image for the live preview, or leave it to use ${i+1}.png.</span>
    </label>
-   <div class="product-file-note"><strong>Automatic GitHub image</strong>If you do not upload an image here, Product ${i+1} automatically uses <code>${i+1}.png</code> from the same folder as <code>index.html</code>.</div>
+   <div class="product-file-note"><strong>Preview + export mapping</strong>Product ${i+1} uses <code>${i+1}.png</code> by default. Uploaded images are embedded into the downloaded HTML, so the card and click-open preview stay functional.</div>
    ${x.image?`<img src="${esc(x.image)}" style="width:100%;height:100px;object-fit:contain;background:#0b0e14;border-radius:10px;margin-top:8px;border:1px solid #ffffff12">`:""}
  </div>`).join("") + (data.products.length>=8?'<div class="upload">Maximum 8 products reached.</div>':'');
 }
@@ -934,7 +967,11 @@ window.handleProductImage=(i,file)=>{
  renderSectionChips();
 }
 window.editAdvanced=(type,i,k,v)=>{data[type][i][k]=v;save();updatePreview()};
-window.removeAdvanced=(type,i)=>{data[type].splice(i,1);save();renderAdvancedEditors();updatePreview()};
+window.removeAdvanced=(type,i)=>{
+ data[type].splice(i,1);
+ if(type==="products") data.products.forEach((p,idx)=>{if(!p.image || /^\d+\.png$/i.test(p.image))p.image=`${idx+1}.png`;});
+ save();renderAdvancedEditors();updatePreview()
+};
 function addAdvanced(type,obj){data[type].push(obj);save();renderAdvancedEditors();updatePreview()}
 
 function renderProjectsEditor(){
@@ -966,7 +1003,7 @@ function renderProjects(){
  insert("education","Education","Academic background and learning.",`<div class="edu-grid">${data.education.map(x=>`<article class="info-card"><h3>${esc(x.degree)}</h3><p>${esc(x.school)} · ${esc(x.year)}</p><p>${esc(x.desc)}</p></article>`).join("")}</div>`);
  insert("certifications","Certifications","Credentials and professional development.",`<div class="cert-grid">${data.certifications.map(x=>`<article class="info-card"><h3>${esc(x.title)}</h3><p>${esc(x.issuer)} · ${esc(x.year)}</p></article>`).join("")}</div>`);
  insert("testimonials","Testimonials","Words from people I have worked with.",`<div class="testimonial-grid">${data.testimonials.map(x=>`<article class="quote-card"><p>“${esc(x.quote)}”</p><strong>${esc(x.name)}</strong><span>${esc(x.role)}</span></article>`).join("")}</div>`);
- insert("products","Products","Featured products, packages and services. Product images can be automatic numbered PNG files.",`<div class="product-grid">${data.products.slice(0,8).map((x,i)=>{const src=x.image||`${i+1}.png`;return `<article class="product-card" data-product-index="${i}" tabindex="0" role="button" aria-label="Preview ${esc(x.title)}"><div class="product-card-top"><span class="product-number">0${i+1} / PRODUCT</span><span class="product-category">FEATURED</span></div><div class="product-image"><img src="${esc(src)}" alt="" onerror="this.style.display='none';this.parentElement.classList.add('no-product-image')"><span class="product-fallback">✦</span></div><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p><div class="product-price">${esc(x.price)}</div><span class="product-open-hint">OPEN PREVIEW ↗</span></article>`}).join("")}</div>`);
+ insert("products","Products","Featured products, packages and services. Product images can be automatic numbered PNG files.",`<div class="product-grid">${data.products.slice(0,8).map((x,i)=>{const src=x.image||`${i+1}.png`;return `<article class="product-card" data-product-index="${i}" tabindex="0" role="button" aria-label="Preview ${esc(x.title)}" onclick="openProductPreview(${i})"><div class="product-card-top"><span class="product-number">0${i+1} / PRODUCT</span><span class="product-category">${esc(src)}</span></div><div class="product-image"><img src="${esc(src)}" alt="" onerror="this.style.display='none';this.parentElement.classList.add('no-product-image')"><span class="product-fallback">✦</span></div><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p><div class="product-price">${esc(x.price)}</div><span class="product-open-hint">OPEN PREVIEW ↗</span></article>`}).join("")}</div>`);
  insert("faq","FAQ","Quick answers for prospective clients.",`<div class="faq-list">${data.faq.map(x=>`<article class="faq-item"><button class="faq-q">${esc(x.q)}</button><div class="faq-a">${esc(x.a)}</div></article>`).join("")}</div>`);
 }
 function updatePreview(){
@@ -1002,7 +1039,7 @@ $("addExperience").onclick=()=>addAdvanced("experience",{role:"New Role",company
 $("addEducation").onclick=()=>addAdvanced("education",{degree:"New Qualification",school:"Institute",year:"2026",desc:"Describe your education."});
 $("addCertification").onclick=()=>addAdvanced("certifications",{title:"New Certification",issuer:"Issuer",year:"2026"});
 $("addTestimonial").onclick=()=>addAdvanced("testimonials",{quote:"Write a client testimonial here.",name:"Client Name",role:"Role"});
-$("addProduct").onclick=()=>{if(data.products.length<8)addAdvanced("products",{title:"New Product",desc:"Describe the product.",price:"$99",image:"",link:"#"});else toast("Maximum 8 products")};
+$("addProduct").onclick=()=>{if(data.products.length<8){const i=data.products.length;addAdvanced("products",{title:"New Product",desc:"Describe the product.",price:"$99",image:`${i+1}.png`,link:"#"});}else toast("Maximum 8 products")};
 $("addFaq").onclick=()=>addAdvanced("faq",{q:"New question?",a:"Write the answer here."});
 
 document.querySelectorAll(".template").forEach(t=>t.onclick=()=>{data.template=t.dataset.template;updatePreview();document.querySelectorAll(".template").forEach(x=>x.classList.toggle("active",x===t))});
@@ -1025,7 +1062,7 @@ function generatedCode(){
  const education=d.education.map(x=>`<article class="info-card"><h3>${esc(x.degree)}</h3><p>${esc(x.school)} · ${esc(x.year)}</p><p>${esc(x.desc)}</p></article>`).join("");
  const certifications=d.certifications.map(x=>`<article class="info-card"><h3>${esc(x.title)}</h3><p>${esc(x.issuer)} · ${esc(x.year)}</p></article>`).join("");
  const testimonials=d.testimonials.map(x=>`<article class="quote-card"><p>“${esc(x.quote)}”</p><strong>${esc(x.name)}</strong><span>${esc(x.role)}</span></article>`).join("");
- const products=d.products.slice(0,8).map((x,i)=>{const src=x.image||`${i+1}.png`;return `<article class="product-card" data-product-index="${i}" tabindex="0" role="button" aria-label="Preview ${esc(x.title)}"><div class="product-card-top"><span class="product-number">0${i+1} / PRODUCT</span><span class="product-category">FEATURED</span></div><div class="product-image"><img src="${esc(src)}" alt="${esc(x.title||"Product")}" onerror="this.style.display='none';this.parentElement.classList.add('no-product-image')"><span class="product-fallback">✦</span></div><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p><div class="product-price">${esc(x.price)}</div><span class="product-open-hint">OPEN PREVIEW ↗</span></article>`}).join("");
+ const products=d.products.slice(0,8).map((x,i)=>{const src=x.image||`${i+1}.png`;return `<article class="product-card" data-product-index="${i}" tabindex="0" role="button" aria-label="Preview ${esc(x.title)}" onclick="openProductPreview(${i})"><div class="product-card-top"><span class="product-number">0${i+1} / PRODUCT</span><span class="product-category">FEATURED</span></div><div class="product-image"><img src="${esc(src)}" alt="${esc(x.title||"Product")}" onerror="this.style.display='none';this.parentElement.classList.add('no-product-image')"><span class="product-fallback">✦</span></div><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p><div class="product-price">${esc(x.price)}</div><span class="product-open-hint">OPEN FULL PREVIEW ↗</span></article>`}).join("");
  const faq=d.faq.map(x=>`<article class="faq-item"><details><summary>${esc(x.q)}</summary><p>${esc(x.a)}</p></details></article>`).join("");
  const optional=(id,title,intro,body)=>(d.enabledSections||[]).includes(id)?`<section class="prof-section" id="${id}"><div class="prof-head"><div><span class="prof-kicker">DETAILS</span><h2>${title}</h2><p class="prof-intro">${intro}</p></div></div>${body}</section>`:"";
 
@@ -1118,22 +1155,19 @@ nav{
 .contact h2{font:600 28px "Space Grotesk"}.contact p{color:#858e9e;font-size:13px;margin-top:5px}.social{display:flex;gap:18px;margin-top:20px;flex-wrap:wrap}
 .footer{text-align:center;border-top:1px solid #ffffff12;padding:25px;color:#646d7c;font-size:10px}
 
-.product-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:9999;display:none;align-items:center;justify-content:center;padding:0;opacity:0;transition:opacity .2s}
+.product-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);z-index:99999;display:none;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .2s}
 .product-lightbox.open{display:flex;opacity:1}
-.product-lightbox-window{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;position:relative}
-.product-lightbox-close{position:absolute;right:24px;top:18px;width:44px;height:44px;border:0;background:transparent;color:#fff;border-radius:0;font-size:32px;z-index:4;display:grid;place-items:center}
-.product-lightbox-close:hover{color:var(--accent2)}
-.product-lightbox-stage{width:100%;height:100%;flex:1;min-height:0;display:grid;grid-template-columns:56px minmax(0,1fr) 56px;align-items:center;gap:14px;padding:72px 24px 104px}
-.product-lightbox-main{height:100%;min-height:0;display:flex;align-items:center;justify-content:center}
-.product-lightbox-main img{height:min(76vh,calc(100vh - 190px)) !important;max-height:none !important;width:auto !important;max-width:calc(100vw - 160px) !important;object-fit:contain;border-radius:4px;box-shadow:0 30px 100px rgba(0,0,0,.7)}
-.product-lightbox-main .no-image{width:min(680px,76vw);height:min(62vh,620px);display:grid;place-items:center;border:1px solid #ffffff12;border-radius:15px;background:#11151d;font-size:72px;color:#303746}
-.product-lightbox-arrow{width:50px;height:68px;border:1px solid #ffffff20;border-radius:999px;background:rgba(255,255,255,.05);color:#fff;font-size:32px;display:grid;place-items:center}
-.product-lightbox-arrow:hover{border-color:var(--accent2);color:var(--accent2);background:rgba(255,255,255,.1)}
-.product-lightbox-info{display:none}
-.product-lightbox-thumbs{position:absolute;left:24px;right:24px;bottom:18px;width:auto;display:flex;gap:8px;justify-content:center;overflow-x:auto;padding:0 58px 2px}
-.product-lightbox-thumb{flex:0 0 70px;height:52px;border:1px solid #ffffff18;border-radius:4px;overflow:hidden;background:#11151d;padding:0;opacity:.55}
-.product-lightbox-thumb.active,.product-lightbox-thumb:hover{opacity:1;border-color:var(--accent)}
-.product-lightbox-thumb img{width:100%;height:100%;object-fit:cover}.product-lightbox-thumb span{display:grid;place-items:center;width:100%;height:100%;color:#394151}
+.product-lightbox-window{position:relative;width:min(1180px,100%);height:min(92vh,900px);display:flex;align-items:center;justify-content:center}
+.product-lightbox-close{position:absolute;right:0;top:0;width:44px;height:44px;border:0;background:rgba(255,255,255,.08);color:#fff;border-radius:999px;font-size:28px;z-index:5;display:grid;place-items:center;cursor:pointer}
+.product-lightbox-close:hover{background:rgba(255,255,255,.16)}
+.product-lightbox-stage{width:100%;height:100%;display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:12px;padding:12px 4px}
+.product-lightbox-main{width:100%;height:100%;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.product-lightbox-main img{display:block;width:100% !important;height:100% !important;max-width:100% !important;max-height:100% !important;object-fit:contain !important;border-radius:4px;box-shadow:0 24px 90px rgba(0,0,0,.65)}
+.product-lightbox-main .no-image{width:70%;height:70%;display:grid;place-items:center;border:1px solid #ffffff12;border-radius:15px;background:#11151d;font-size:64px;color:#303746}
+.product-lightbox-arrow{width:48px;height:64px;border:1px solid #ffffff20;border-radius:999px;background:rgba(255,255,255,.06);color:#fff;font-size:32px;display:grid;place-items:center;cursor:pointer}
+.product-lightbox-arrow:hover{border-color:var(--accent2);color:var(--accent2);background:rgba(255,255,255,.12)}
+.product-lightbox-info,.product-lightbox-thumbs{display:none !important}
+@media(max-width:620px){.product-lightbox{padding:8px}.product-lightbox-window{height:92vh}.product-lightbox-stage{grid-template-columns:38px minmax(0,1fr) 38px;gap:4px;padding:12px 0}.product-lightbox-arrow{width:34px;height:56px;font-size:25px}.product-lightbox-close{width:38px;height:38px;font-size:24px}.product-lightbox-main img{width:100%!important;height:100%!important;object-fit:contain!important}}
 
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;text-align:center;padding:70px 25px;min-height:auto}.avatar{width:230px;justify-self:center;grid-row:1}.hero>div:first-child{grid-row:2}
@@ -1556,7 +1590,7 @@ nav{background:color-mix(in srgb,var(--bg) 92%,transparent);border-color:color-m
 .project,.service-card,.skill-card,.info-card,.quote-card,.contact,.faq-item{background:color-mix(in srgb,var(--panel) 88%,transparent);border-color:color-mix(in srgb,var(--line) 75%,transparent)}
 .product-card{background:var(--panel2);border-color:color-mix(in srgb,var(--line) 75%,transparent)}
 .footer{border-color:color-mix(in srgb,var(--line) 72%,transparent);color:var(--muted)}
-</style></style></head><body>
+</style></head><body>
 <!-- PortfolioForge generated portfolio. Product 1 = 1.png, Product 2 = 2.png, … Product 8 = 8.png. Keep numbered PNG files beside index.html. -->
 <nav aria-label="Primary navigation"><div class="navname">${esc(d.name)}</div><div class="links"><a href="#about">About</a><a href="#work">Work</a><a href="#services">Services</a><a href="#products">Products</a><a href="#contact">Contact</a></div></nav>
 <main>
@@ -1590,34 +1624,117 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
 
 <script>
 (function(){
- const products=${JSON.stringify(d.products.slice(0,8).map((x,i)=>({title:x.title||"",desc:x.desc||"",price:x.price||"",image:x.image||`${i+1}.png`,link:x.link||"#"})))};
+ const products=${JSON.stringify(d.products.slice(0,8).map((x,i)=>({image:x.image||`${i+1}.png`})))};
  let index=0;
- const box=document.getElementById("productLightbox"),main=document.getElementById("productLightboxMain"),info=document.getElementById("productLightboxInfo"),thumbs=document.getElementById("productLightboxThumbs");
+ const box=document.getElementById("productLightbox");
+ const main=document.getElementById("productLightboxMain");
+ const closeBtn=document.getElementById("productLightboxClose");
+ const prevBtn=document.getElementById("productPrev");
+ const nextBtn=document.getElementById("productNext");
+ if(!box||!main||!closeBtn||!prevBtn||!nextBtn)return;
  function render(){
    if(!products.length)return;
    index=(index+products.length)%products.length;
-   const p=products[index];
-   main.innerHTML=p.image?'<img src="'+p.image+'" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\"no-image\">✦</div>\'">':'<div class="no-image">✦</div>';
-   const safe=t=>String(t??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-   info.innerHTML='<h3>'+safe(p.title)+'</h3><p>'+safe(p.desc)+'</p><div class="price">'+safe(p.price)+'</div>'+(p.link&&p.link!="#"?'<a href="'+p.link+'" target="_blank" rel="noopener">VIEW PRODUCT ↗</a>':'');
-   thumbs.innerHTML=products.map((x,i)=>'<button class="product-lightbox-thumb '+(i===index?'active':'')+'" data-i="'+i+'" aria-label="Open '+safe(x.title)+'">'+(x.image?'<img src="'+x.image+'" alt="" onerror="this.style.display=\'none\'">':'<span>✦</span>')+'</button>').join("");
-   thumbs.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{index=+b.dataset.i;render()});
-   const a=thumbs.querySelector(".active");if(a)a.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+   const src=products[index].image;
+   main.innerHTML=src?'<img src="'+src+'" alt="" onerror="this.onerror=null;this.style.display=\'none\'">':'';
  }
- function open(i){index=i;render();box.classList.add("open");box.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+ function open(i){index=Math.max(0,Math.min(products.length-1,Number(i)||0));render();box.classList.add("open");box.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
  function close(){box.classList.remove("open");box.setAttribute("aria-hidden","true");document.body.style.overflow=""}
- function move(d){index=(index+d+products.length)%products.length;render()}
- document.querySelectorAll(".product-card").forEach(c=>{c.addEventListener("click",()=>open(+c.dataset.productIndex));c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(+c.dataset.productIndex)}})});
- document.getElementById("productLightboxClose").onclick=close;
- document.getElementById("productPrev").onclick=()=>move(-1);
- document.getElementById("productNext").onclick=()=>move(1);
- box.addEventListener("click",e=>{if(e.target===box)close()});
- document.addEventListener("keydown",e=>{if(!box.classList.contains("open"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1)});
-})();
+ function move(d){if(!products.length)return;index=(index+d+products.length)%products.length;render()}
+ window.openProductPreview=open;document.addEventListener("click",function(e){const card=e.target.closest&&e.target.closest(".product-card[data-product-index]");if(card){e.preventDefault();open(card.getAttribute("data-product-index"));return;}if(e.target===box)close()});
+ document.addEventListener("keydown",function(e){const card=e.target.closest&&e.target.closest(".product-card[data-product-index]");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();open(card.getAttribute("data-product-index"));return;}if(!box.classList.contains("open"))return;if(e.key==="Escape")close();else if(e.key==="ArrowLeft")move(-1);else if(e.key==="ArrowRight")move(1)});
+ closeBtn.addEventListener("click",close);
+ prevBtn.addEventListener("click",function(e){e.stopPropagation();move(-1)});
+ nextBtn.addEventListener("click",function(e){e.stopPropagation();move(1)});
+})();;
 <\/script>
 
 
 
+
+</body></html>`;
+}
+
+let lightboxIndex=0;
+function productList(){return (data.products||[]).slice(0,8)}
+function renderProductLightbox(){
+ const items=productList(); if(!items.length)return;
+ lightboxIndex=(lightboxIndex+items.length)%items.length;
+ const x=items[lightboxIndex];
+ const main=$("productLightboxMain");
+ const src=x.image||`${lightboxIndex+1}.png`;
+ main.innerHTML=src?`<img src="${esc(src)}" alt="" onerror="this.onerror=null;this.style.display='none'">`:'';
+}
+function openProductLightbox(i){
+ lightboxIndex=i; renderProductLightbox();
+ $("productLightbox").classList.add("open");
+ $("productLightbox").setAttribute("aria-hidden","false");
+ document.body.style.overflow="hidden";
+}
+function closeProductLightbox(){
+ $("productLightbox").classList.remove("open");
+ $("productLightbox").setAttribute("aria-hidden","true");
+ document.body.style.overflow="";
+}
+function moveProduct(dir){const n=productList().length;if(!n)return;lightboxIndex=(lightboxIndex+dir+n)%n;renderProductLightbox()}
+$("productLightboxClose").onclick=closeProductLightbox;
+$("productPrev").onclick=()=>moveProduct(-1);
+$("productNext").onclick=()=>moveProduct(1);
+$("productLightbox").addEventListener("click",e=>{if(e.target===$("productLightbox"))closeProductLightbox()});
+document.addEventListener("keydown",e=>{
+ if(!$("productLightbox").classList.contains("open"))return;
+ if(e.key==="Escape")closeProductLightbox();
+ if(e.key==="ArrowLeft")moveProduct(-1);
+ if(e.key==="ArrowRight")moveProduct(1);
+});
+$("site").addEventListener("click",e=>{
+ const card=e.target.closest(".product-card");
+ if(card && $("site").contains(card))openProductLightbox(+card.dataset.productIndex);
+});
+$("site").addEventListener("keydown",e=>{
+ const card=e.target.closest(".product-card");
+ if(card && (e.key==="Enter"||e.key===" ")){e.preventDefault();openProductLightbox(+card.dataset.productIndex)}
+});
+
+function downloadPortfolio(){
+  readInputs();
+  const html=generatedCode();
+  const blob=new Blob([html],{type:"text/html;charset=utf-8"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=(data.siteTitle||data.name||"portfolio").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+"-portfolio.html";
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  toast("Complete portfolio downloaded");
+}
+$("downloadBtn").onclick=downloadPortfolio;
+$("copyBtn").onclick=async()=>{readInputs();try{await navigator.clipboard.writeText(generatedCode());toast("Complete portfolio code copied")}catch(e){toast("Copy blocked — use Download portfolio")}};
+fillInputs();
+renderPalettePresets();
+renderAdvancedEditors();
+renderSectionChips();
+// Mobile-first preview: phones/tablets open directly in the real mobile portfolio layout.
+if(window.matchMedia("(max-width:760px)").matches) setPreviewMode("mobile");
+window.matchMedia("(max-width:760px)").addEventListener?.("change", e=>{ if(e.matches) setPreviewMode("mobile"); });
+
+/* Mobile devices open the editor in the real mobile portfolio viewport. */
+(function(){
+  function setRealMobilePreviewDefault(){
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      var p=document.getElementById("preview");
+      var mb=document.getElementById("mobileBtn");
+      var db=document.getElementById("desktopBtn");
+      if(p && mb && db){
+        p.classList.add("mobile-preview");
+        mb.classList.add("active");
+        db.classList.remove("active");
+      }
+    }
+  }
+  window.addEventListener("DOMContentLoaded", setRealMobilePreviewDefault);
+})();
+
+</script>
 
 <!-- =========================================================
      PORTFOLIOFORGE — SEPARATE PUBLISHING GUIDE
@@ -1630,7 +1747,7 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
       <div>
         <span class="pf-publish-eyebrow">FINAL STEP · PUBLISH</span>
         <h2 id="publishGuideTitle">Edit your portfolio, then publish it on GitHub Pages.</h2>
-        <p>Use the builder above to create your portfolio. When you are finished, download the generated HTML, rename it to <strong>index.html</strong>, keep your product PNG files beside it, and upload everything to a GitHub repository. GitHub Pages can then turn that repository into your live portfolio website.</p>
+        <p>Use the builder above to create your portfolio. When you are finished, download the generated HTML, rename it to <strong>index.html</strong>, and upload it to a GitHub repository. GitHub Pages can then turn that repository into your live portfolio website.</p>
       </div>
     </div>
 
@@ -1653,7 +1770,7 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
             <code>1.png</code><code>2.png</code><code>3.png</code><code>4.png</code>
             <code>5.png</code><code>6.png</code><code>7.png</code><code>8.png</code>
           </div>
-          <p>Use lowercase names and keep the PNG files in the same folder as <strong>index.html</strong>. Product 1 uses <strong>1.png</strong>, Product 2 uses <strong>2.png</strong>, and so on.</p>
+          <p>Use lowercase names and keep the PNG files in the same folder as <strong>index.html</strong>. Product 1 uses <strong>1.png</strong>, Product 2 uses <strong>2.png</strong>, and so on. Each card opens the same product image in the full preview window, and that interaction is included in the exported HTML.</p>
         </div>
       </article>
 
@@ -1772,92 +1889,6 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
   </div>
 </section>
 
-</body></html>`;
-}
-
-let lightboxIndex=0;
-function productList(){return (data.products||[]).slice(0,8)}
-function renderProductLightbox(){
- const items=productList(); if(!items.length)return;
- lightboxIndex=(lightboxIndex+items.length)%items.length;
- const x=items[lightboxIndex];
- const box=$("productLightbox"), main=$("productLightboxMain"), info=$("productLightboxInfo"), thumbs=$("productLightboxThumbs");
- main.innerHTML=x.image?`<img src="${esc(x.image)}" alt="${esc(x.title||"Product")}">`:`<div class="no-image">✦</div>`;
- info.innerHTML=`<h3>${esc(x.title||"Product")}</h3><p>${esc(x.desc||"")}</p><div class="price">${esc(x.price||"")}</div>${x.link&&x.link!=="#" ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">VIEW PRODUCT ↗</a>`:""}`;
- thumbs.innerHTML=items.map((p,i)=>`<button class="product-lightbox-thumb ${i===lightboxIndex?"active":""}" data-thumb="${i}" aria-label="Open ${esc(p.title||"Product")}">${p.image?`<img src="${esc(p.image)}" alt="">`:"<span>✦</span>"}</button>`).join("");
- thumbs.querySelectorAll("[data-thumb]").forEach(b=>b.onclick=()=>{lightboxIndex=+b.dataset.thumb;renderProductLightbox()});
- const active=thumbs.querySelector(".active"); if(active)active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
-}
-function openProductLightbox(i){
- lightboxIndex=i; renderProductLightbox();
- $("productLightbox").classList.add("open");
- $("productLightbox").setAttribute("aria-hidden","false");
- document.body.style.overflow="hidden";
-}
-function closeProductLightbox(){
- $("productLightbox").classList.remove("open");
- $("productLightbox").setAttribute("aria-hidden","true");
- document.body.style.overflow="";
-}
-function moveProduct(dir){const n=productList().length;if(!n)return;lightboxIndex=(lightboxIndex+dir+n)%n;renderProductLightbox()}
-$("productLightboxClose").onclick=closeProductLightbox;
-$("productPrev").onclick=()=>moveProduct(-1);
-$("productNext").onclick=()=>moveProduct(1);
-$("productLightbox").addEventListener("click",e=>{if(e.target===$("productLightbox"))closeProductLightbox()});
-document.addEventListener("keydown",e=>{
- if(!$("productLightbox").classList.contains("open"))return;
- if(e.key==="Escape")closeProductLightbox();
- if(e.key==="ArrowLeft")moveProduct(-1);
- if(e.key==="ArrowRight")moveProduct(1);
-});
-$("site").addEventListener("click",e=>{
- const card=e.target.closest(".product-card");
- if(card && $("site").contains(card))openProductLightbox(+card.dataset.productIndex);
-});
-$("site").addEventListener("keydown",e=>{
- const card=e.target.closest(".product-card");
- if(card && (e.key==="Enter"||e.key===" ")){e.preventDefault();openProductLightbox(+card.dataset.productIndex)}
-});
-
-function downloadPortfolio(){
-  readInputs();
-  const html=generatedCode();
-  const blob=new Blob([html],{type:"text/html;charset=utf-8"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=(data.siteTitle||data.name||"portfolio").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+"-portfolio.html";
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-  toast("Complete portfolio downloaded");
-}
-$("downloadBtn").onclick=downloadPortfolio;
-$("copyBtn").onclick=async()=>{readInputs();try{await navigator.clipboard.writeText(generatedCode());toast("Complete portfolio code copied")}catch(e){toast("Copy blocked — use Download portfolio")}};
-fillInputs();
-renderPalettePresets();
-renderAdvancedEditors();
-renderSectionChips();
-// Mobile-first preview: phones/tablets open directly in the real mobile portfolio layout.
-if(window.matchMedia("(max-width:760px)").matches) setPreviewMode("mobile");
-window.matchMedia("(max-width:760px)").addEventListener?.("change", e=>{ if(e.matches) setPreviewMode("mobile"); });
-
-/* Mobile devices open the editor in the real mobile portfolio viewport. */
-(function(){
-  function setRealMobilePreviewDefault(){
-    if (window.matchMedia("(max-width: 760px)").matches) {
-      var p=document.getElementById("preview");
-      var mb=document.getElementById("mobileBtn");
-      var db=document.getElementById("desktopBtn");
-      if(p && mb && db){
-        p.classList.add("mobile-preview");
-        mb.classList.add("active");
-        db.classList.remove("active");
-      }
-    }
-  }
-  window.addEventListener("DOMContentLoaded", setRealMobilePreviewDefault);
-})();
-
-</script>
 
 <script>
 /* PortfolioForge responsive scroll guard — does not re-render portfolio content. */
