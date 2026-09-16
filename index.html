@@ -1693,7 +1693,32 @@ $("site").addEventListener("keydown",e=>{
 });
 
 $("downloadBtn").onclick=()=>{readInputs();const blob=new Blob([generatedCode()],{type:"text/html;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(data.name||"portfolio").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+"-portfolio.html";a.click();URL.revokeObjectURL(a.href);toast("HTML portfolio downloaded")};
-$("copyBtn").onclick=async()=>{readInputs();try{await navigator.clipboard.writeText(generatedCode());toast("Portfolio code copied")}catch(e){toast("Copy blocked — use Download HTML")}};
+$("copyBtn").onclick=async()=>{
+  readInputs();
+  const code=generatedCode();
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(code);
+    }else{
+      const ta=document.createElement("textarea");
+      ta.value=code;
+      ta.setAttribute("readonly","");
+      ta.style.position="fixed";
+      ta.style.left="-9999px";
+      ta.style.top="0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0,ta.value.length);
+      const ok=document.execCommand("copy");
+      ta.remove();
+      if(!ok) throw new Error("copy failed");
+    }
+    toast("Complete portfolio code copied");
+  }catch(e){
+    toast("Copy blocked — use Download HTML");
+  }
+};
 fillInputs();
 renderAdvancedEditors();
 renderSectionChips();
