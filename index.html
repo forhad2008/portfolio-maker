@@ -257,32 +257,7 @@ input:focus,textarea:focus,select:focus{border-color:rgba(139,92,246,.7);box-sha
 .mobile-preview .product-card{min-height:235px}.mobile-preview .product-image{height:155px}
 .mobile-preview .contact{margin:0 20px 35px;padding:22px;display:block}.mobile-preview .contact h2{font-size:21px}
 .mobile-preview .contact .btn{margin-top:14px}.mobile-preview .footer{padding:18px 12px;font-size:8px}
-.mobile-preview .product-lightbox-window{width:100%;height:92vh}
-.mobile-preview .product-lightbox{padding:14px 8px}
-.mobile-preview .product-lightbox-stage{grid-template-columns:40px minmax(0,1fr) 40px;gap:5px}
 
-.product-lightbox{
-  position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;opacity:0;transition:opacity .2s
-}
-.product-lightbox.open{display:flex;opacity:1}
-.product-lightbox-window{width:min(1100px,94vw);height:min(88vh,850px);display:flex;flex-direction:column;align-items:center;position:relative}
-.product-lightbox-close{
-  position:absolute;right:-2px;top:-5px;width:44px;height:44px;border:1px solid #ffffff15;background:rgba(255,255,255,.08);
-  color:#fff;border-radius:50%;font-size:27px;z-index:4;display:grid;place-items:center
-}
-.product-lightbox-stage{width:100%;flex:1;min-height:0;display:grid;grid-template-columns:55px minmax(0,1fr) 55px;align-items:center;gap:15px}
-.product-lightbox-main{height:100%;min-height:0;display:flex;align-items:center;justify-content:center}
-.product-lightbox-main img{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border-radius:12px;box-shadow:0 25px 80px rgba(0,0,0,.6)}
-.product-lightbox-main .no-image{width:min(650px,72vw);height:min(58vh,600px);display:grid;place-items:center;border:1px solid #ffffff12;border-radius:14px;background:#11151d;font-size:70px;color:#303746}
-.product-lightbox-arrow{width:50px;height:68px;border:1px solid #ffffff18;border-radius:15px;background:rgba(255,255,255,.05);color:#fff;font-size:31px;display:grid;place-items:center}
-.product-lightbox-info{text-align:center;margin:10px 60px 10px;max-width:760px}
-.product-lightbox-info h3{font-size:clamp(17px,2vw,26px);margin-bottom:3px}.product-lightbox-info p{color:#8d96a5;font-size:11px;max-width:680px;margin:auto}
-.product-lightbox-info .price{color:var(--accent2);font-weight:700;margin-top:6px}.product-lightbox-info a{display:inline-block;color:#fff;text-decoration:none;font-size:10px;border:1px solid #ffffff18;padding:8px 12px;border-radius:9px;margin-top:9px}
-.product-lightbox-thumbs{width:100%;display:flex;gap:8px;justify-content:center;overflow-x:auto;padding:8px 4px 2px}
-.product-lightbox-thumb{flex:0 0 70px;height:52px;border:1px solid #ffffff18;border-radius:8px;overflow:hidden;background:#11151d;padding:0;opacity:.55}
-.product-lightbox-thumb.active,.product-lightbox-thumb:hover{opacity:1;border-color:var(--accent)}
-.product-lightbox-thumb img{width:100%;height:100%;object-fit:contain}.product-lightbox-thumb span{display:grid;place-items:center;width:100%;height:100%;color:#394151}
 
 .toast{
   position:fixed;right:18px;bottom:18px;background:#171b24;border:1px solid var(--line);padding:10px 14px;border-radius:10px;
@@ -462,29 +437,50 @@ body{overscroll-behavior-x:none;}
 }
 
 
-/* PRODUCT WINDOW — FULL-SIZE AUTO-FIT */
-.product-lightbox-main{
-  width:100% !important;
-  height:100% !important;
-  min-width:0 !important;
-  min-height:0 !important;
-  overflow:hidden !important;
+
+
+/* ============================================================
+   EDITOR PRODUCT PREVIEW — live in editor + also in exported site
+   ============================================================ */
+.editor-product-lightbox{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,3,6,.92);backdrop-filter:blur(24px) saturate(1.15);-webkit-backdrop-filter:blur(24px) saturate(1.15);opacity:0;transition:opacity .2s}
+.editor-product-lightbox.open{display:flex;opacity:1}
+.editor-product-lightbox-window{width:min(1180px,96vw);height:min(92vh,900px);display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:12px;position:relative;padding:14px;border:1px solid #ffffff16;border-radius:24px;background:linear-gradient(145deg,rgba(15,18,25,.98),rgba(7,9,13,.98));box-shadow:0 35px 120px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.02) inset}
+.editor-product-lightbox-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px}
+.editor-product-lightbox-badge{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#8f99aa}
+.editor-product-lightbox-tools{display:flex;align-items:center;gap:6px}
+.editor-product-lightbox-tool,.editor-product-lightbox-close{width:38px;height:38px;border:1px solid #ffffff14;background:#ffffff08;color:#fff;border-radius:10px;display:grid;place-items:center;font-size:15px;transition:.18s}
+.editor-product-lightbox-tool:hover,.editor-product-lightbox-close:hover{background:#ffffff12;border-color:#ffffff28;transform:translateY(-1px)}
+.editor-product-lightbox-close{font-size:22px;border-radius:50%}
+.editor-product-lightbox-stage{width:100%;min-height:0;display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:12px}
+.editor-product-lightbox-main{height:100%;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #ffffff0d;border-radius:18px;background:radial-gradient(circle at center,#151a23 0,#0b0e14 58%,#080a0e 100%);position:relative}
+.editor-product-lightbox-main img{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border-radius:14px;transform-origin:center;transition:transform .18s ease;user-select:none;-webkit-user-drag:none}
+.editor-product-lightbox-main .no-image{width:min(680px,76vw);height:min(62vh,620px);display:grid;place-items:center;border:1px solid #ffffff12;border-radius:15px;background:#11151d;font-size:72px;color:#303746}
+.editor-product-lightbox-arrow{width:52px;height:72px;border:1px solid #ffffff16;border-radius:15px;background:#ffffff07;color:#fff;font-size:31px;display:grid;place-items:center;transition:.18s}
+.editor-product-lightbox-arrow:hover{background:#ffffff11;border-color:#ffffff30;transform:translateY(-1px)}
+.editor-product-lightbox-info{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;text-align:left;padding:4px 6px}
+.editor-product-lightbox-copy h3{font-size:clamp(18px,2.2vw,28px);line-height:1.1}
+.editor-product-lightbox-copy p{color:#8d96a5;font-size:11px;line-height:1.55;margin-top:5px;max-width:760px}
+.editor-product-lightbox-meta{text-align:right;min-width:110px}
+.editor-product-lightbox-meta .price{color:var(--accent2);font-weight:800;font-size:13px}
+.editor-product-lightbox-meta a,.editor-product-lightbox-meta button{display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:9px;border:1px solid #ffffff18;background:#ffffff08;padding:8px 11px;border-radius:9px;margin-top:7px;cursor:pointer}
+.editor-product-lightbox-thumbs{width:100%;display:flex;gap:8px;justify-content:flex-start;overflow-x:auto;padding:2px 3px 1px;scrollbar-width:thin}
+.editor-product-lightbox-thumb{flex:0 0 74px;height:56px;border:1px solid #ffffff14;border-radius:9px;overflow:hidden;background:#11151d;padding:0;opacity:.5;transition:.18s;cursor:pointer}
+.editor-product-lightbox-thumb.active,.editor-product-lightbox-thumb:hover{opacity:1;border-color:var(--accent);transform:translateY(-1px)}
+.editor-product-lightbox-thumb img{width:100%;height:100%;object-fit:contain}
+.editor-product-lightbox-hint{font-size:8px;color:#687283;letter-spacing:.05em;white-space:nowrap}
+@media (min-width:761px){
+  #preview:not(.mobile-preview) .product-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  #preview:not(.mobile-preview) .product-card{min-height:0}
+  #preview:not(.mobile-preview) .product-image{height:auto;aspect-ratio:1/1;min-height:0}
 }
-.product-lightbox-main img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  max-width:100% !important;
-  max-height:100% !important;
-  object-fit:contain !important;
-  object-position:center !important;
-}
-.product-lightbox-thumb img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  object-fit:contain !important;
-  object-position:center !important;
+@media (max-width:1050px) and (min-width:901px){#preview:not(.mobile-preview) .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media (max-width:900px) and (min-width:761px){#preview:not(.mobile-preview) .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:760px){
+  .editor-product-lightbox{padding:7px}.editor-product-lightbox-window{width:100%;height:96vh;padding:9px;border-radius:18px;gap:8px}
+  .editor-product-lightbox-stage{grid-template-columns:34px minmax(0,1fr) 34px;gap:4px}.editor-product-lightbox-arrow{width:34px;height:54px;border-radius:10px;font-size:23px}
+  .editor-product-lightbox-tool,.editor-product-lightbox-close{width:34px;height:34px}.editor-product-lightbox-close{font-size:20px}
+  .editor-product-lightbox-info{grid-template-columns:1fr;gap:5px}.editor-product-lightbox-meta{text-align:left;min-width:0}.editor-product-lightbox-copy p{font-size:10px}
+  .editor-product-lightbox-hint{display:none}.editor-product-lightbox-thumb{flex-basis:60px;height:48px}
 }
 
 </style>
@@ -526,30 +522,6 @@ body{overscroll-behavior-x:none;}
   .trouble-grid{grid-template-columns:1fr}
 }
 
-/* PRODUCT WINDOW — FULL-SIZE AUTO-FIT */
-.product-lightbox-main{
-  width:100% !important;
-  height:100% !important;
-  min-width:0 !important;
-  min-height:0 !important;
-  overflow:hidden !important;
-}
-.product-lightbox-main img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  max-width:100% !important;
-  max-height:100% !important;
-  object-fit:contain !important;
-  object-position:center !important;
-}
-.product-lightbox-thumb img{
-  display:block !important;
-  width:100% !important;
-  height:100% !important;
-  object-fit:contain !important;
-  object-position:center !important;
-}
 
 </style>
 
@@ -700,23 +672,36 @@ body{overscroll-behavior-x:none;}
     </div>
   </div>
 </main>
+
+<!-- Editor-only product preview. Generated portfolio has its own product window below. -->
+<div class="editor-product-lightbox" id="editorProductLightbox" aria-hidden="true">
+  <div class="editor-product-lightbox-window" role="dialog" aria-modal="true" aria-label="Product preview">
+    <div class="editor-product-lightbox-top">
+      <span class="editor-product-lightbox-badge">PRODUCT PREVIEW · <span id="editorProductCounter">01 / 01</span></span>
+      <div class="editor-product-lightbox-tools">
+        <span class="editor-product-lightbox-hint">← → navigate · Esc close</span>
+        <button class="editor-product-lightbox-tool" id="editorZoomOut" aria-label="Zoom out">−</button>
+        <button class="editor-product-lightbox-tool" id="editorZoomReset" aria-label="Reset zoom">100%</button>
+        <button class="editor-product-lightbox-tool" id="editorZoomIn" aria-label="Zoom in">＋</button>
+        <button class="editor-product-lightbox-tool" id="editorFullscreen" aria-label="Fullscreen">⛶</button>
+        <button class="editor-product-lightbox-close" id="editorLightboxClose" aria-label="Close product preview">×</button>
+      </div>
+    </div>
+    <div class="editor-product-lightbox-stage">
+      <button class="editor-product-lightbox-arrow" id="editorProductPrev" aria-label="Previous product">‹</button>
+      <div class="editor-product-lightbox-main" id="editorProductMain"></div>
+      <button class="editor-product-lightbox-arrow" id="editorProductNext" aria-label="Next product">›</button>
+    </div>
+    <div class="editor-product-lightbox-info" id="editorProductInfo"></div>
+    <div class="editor-product-lightbox-thumbs" id="editorProductThumbs"></div>
+  </div>
+</div>
+
 </div>
 <div class="toast" id="toast">Saved</div>
 
 
 
-<div class="product-lightbox" id="productLightbox" aria-hidden="true">
-  <div class="product-lightbox-window">
-    <button class="product-lightbox-close" id="productLightboxClose" aria-label="Close product preview">×</button>
-    <div class="product-lightbox-stage">
-      <button class="product-lightbox-arrow" id="productPrev" aria-label="Previous product">‹</button>
-      <div class="product-lightbox-main" id="productLightboxMain"></div>
-      <button class="product-lightbox-arrow" id="productNext" aria-label="Next product">›</button>
-    </div>
-    <div class="product-lightbox-info" id="productLightboxInfo"></div>
-    <div class="product-lightbox-thumbs" id="productLightboxThumbs"></div>
-  </div>
-</div>
 
 <script>
 const defaultData={
@@ -811,7 +796,7 @@ function renderAdvancedEditors(){
    <label class="upload" style="cursor:pointer">Upload product image
      <input type="file" accept="image/*" style="display:none" onchange="handleProductImage(${i},this.files[0])">
    </label>
-   <div class="product-file-note"><strong>Automatic GitHub image</strong>If you do not upload an image here, Product ${i+1} automatically uses <code>${i+1}.png</code> from the same folder as <code>index.html</code>.</div>
+   <div class="product-file-note"><strong>Product preview + publishing</strong>Click any product in the live editor preview to open the advanced product window. The same product window is also included in the copied/downloaded portfolio. If you do not upload an image here, Product ${i+1} automatically uses <code>${i+1}.png</code> from the same folder as <code>index.html</code>.</div>
    ${x.image?`<img src="${esc(x.image)}" style="width:100%;height:100px;object-fit:contain;background:#0b0e14;border-radius:10px;margin-top:8px;border:1px solid #ffffff12">`:""}
  </div>`).join("") + (data.products.length>=8?'<div class="upload">Maximum 8 products reached.</div>':'');
 }
@@ -838,6 +823,47 @@ function renderProjectsEditor(){
 }
 window.editProject=(i,k,v)=>{data.projects[i][k]=v;save();updatePreview()}
 window.removeProject=i=>{data.projects.splice(i,1);save();renderProjectsEditor();updatePreview()}
+
+function bindEditorProductPreview(){
+  document.querySelectorAll("#dynamicSections .product-card").forEach(card=>{
+    card.addEventListener("click",()=>openEditorProduct(+card.dataset.productIndex||0));
+    card.addEventListener("keydown",e=>{
+      if(e.key==="Enter"||e.key===" "){e.preventDefault();openEditorProduct(+card.dataset.productIndex||0)}
+    });
+  });
+}
+let editorProductIndex=0,editorProductZoom=1;
+function editorProductRender(){
+  const products=(data.products||[]).slice(0,8),main=$("editorProductMain"),info=$("editorProductInfo"),thumbs=$("editorProductThumbs");
+  if(!products.length)return;
+  editorProductIndex=(editorProductIndex+products.length)%products.length;editorProductZoom=1;
+  const p=products[editorProductIndex];
+  $("editorProductCounter").textContent=String(editorProductIndex+1).padStart(2,"0")+" / "+String(products.length).padStart(2,"0");
+  $("editorZoomReset").textContent="100%";
+  main.replaceChildren();
+  const img=document.createElement("img");img.src=p.image||`${editorProductIndex+1}.png`;img.alt=p.title||"Product";img.draggable=false;
+  img.addEventListener("error",()=>{main.replaceChildren();const e=document.createElement("div");e.className="no-image";e.textContent="◈";main.appendChild(e)},{once:true});
+  main.appendChild(img);
+  info.replaceChildren();
+  const copy=document.createElement("div");copy.className="editor-product-lightbox-copy";
+  const h=document.createElement("h3");h.textContent=p.title||"Product";const d=document.createElement("p");d.textContent=p.desc||"";copy.append(h,d);
+  const meta=document.createElement("div");meta.className="editor-product-lightbox-meta";
+  const price=document.createElement("div");price.className="price";price.textContent=p.price||"";meta.appendChild(price);
+  if(p.link&&p.link!=="#"){const a=document.createElement("a");a.href=p.link;a.target="_blank";a.rel="noopener";a.textContent="VIEW PRODUCT ↗";meta.appendChild(a)}
+  const dl=document.createElement("button");dl.type="button";dl.textContent="DOWNLOAD IMAGE ↓";dl.onclick=editorProductDownload;meta.appendChild(dl);info.append(copy,meta);
+  thumbs.replaceChildren();
+  products.forEach((x,i)=>{
+    const b=document.createElement("button");b.type="button";b.className="editor-product-lightbox-thumb"+(i===editorProductIndex?" active":"");b.setAttribute("aria-label","Open "+(x.title||"Product"));
+    const im=document.createElement("img");im.src=x.image||`${i+1}.png`;im.alt="";im.loading="lazy";b.appendChild(im);b.onclick=()=>{editorProductIndex=i;editorProductRender()};thumbs.appendChild(b);
+  });
+  thumbs.querySelector(".active")?.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+}
+function editorProductApplyZoom(){const img=$("editorProductMain")?.querySelector("img");if(img)img.style.transform=`scale(${editorProductZoom})`;$("editorZoomReset").textContent=Math.round(editorProductZoom*100)+"%"}
+function editorProductZoomBy(delta){editorProductZoom=Math.min(2.5,Math.max(.6,+(editorProductZoom+delta).toFixed(2)));editorProductApplyZoom()}
+function editorProductDownload(){const p=(data.products||[]).slice(0,8)[editorProductIndex];if(!p)return;const a=document.createElement("a");a.href=p.image||`${editorProductIndex+1}.png`;const base=(p.title||"product").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")||"product";a.download=base+"-image";a.click()}
+function openEditorProduct(i){const products=(data.products||[]).slice(0,8);if(!products.length)return;editorProductIndex=Math.max(0,Math.min(i,products.length-1));editorProductRender();const box=$("editorProductLightbox");box.classList.add("open");box.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+function closeEditorProduct(){const box=$("editorProductLightbox");box.classList.remove("open");box.setAttribute("aria-hidden","true");document.body.style.overflow="";const win=box.querySelector(".editor-product-lightbox-window");if(document.fullscreenElement===win)document.exitFullscreen?.()}
+
 function renderProjects(){
  $("pProjects").innerHTML=data.projects.map((p,i)=>`<article class="p-card"><div><div class="p-number">0${i+1}</div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p></div><a class="p-link" href="${esc(p.link||"#")}" target="_blank">VIEW PROJECT ↗</a></article>`).join("");
 
@@ -860,6 +886,7 @@ function renderProjects(){
  insert("testimonials","Testimonials","Words from people I have worked with.",`<div class="testimonial-grid">${data.testimonials.map(x=>`<article class="quote-card"><p>“${esc(x.quote)}”</p><strong>${esc(x.name)}</strong><span>${esc(x.role)}</span></article>`).join("")}</div>`);
  insert("products","Products","Featured products, packages and services. Product images can be automatic numbered PNG files.",`<div class="product-grid">${data.products.slice(0,8).map((x,i)=>{const src=x.image||`${i+1}.png`;return `<article class="product-card" data-product-index="${i}" tabindex="0" role="button" aria-label="Preview ${esc(x.title)}"><div class="product-image"><img src="${esc(src)}" alt="" onerror="this.style.display='none';this.parentElement.classList.add('no-product-image')"><span class="product-fallback"></span></div><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p><div class="product-price">${esc(x.price)}</div><span class="product-open-hint">OPEN PREVIEW ↗</span></article>`}).join("")}</div>`);
  insert("faq","FAQ","Quick answers for prospective clients.",`<div class="faq-list">${data.faq.map(x=>`<article class="faq-item"><button class="faq-q">${esc(x.q)}</button><div class="faq-a">${esc(x.a)}</div></article>`).join("")}</div>`);
+ bindEditorProductPreview();
 }
 function updatePreview(){
  readInputs();
@@ -911,6 +938,25 @@ function setPreviewMode(mode){
 $("mobileBtn").onclick=()=>setPreviewMode("mobile");
 $("desktopBtn").onclick=()=>setPreviewMode("desktop");
 $("resetBtn").onclick=()=>{if(confirm("Reset all portfolio content to the starter data?")){data=structuredClone(defaultData);fillInputs();toast("Portfolio reset")}};
+
+$("editorLightboxClose").onclick=closeEditorProduct;
+$("editorProductPrev").onclick=()=>{editorProductIndex--;editorProductRender()};
+$("editorProductNext").onclick=()=>{editorProductIndex++;editorProductRender()};
+$("editorZoomOut").onclick=()=>editorProductZoomBy(-.1);
+$("editorZoomIn").onclick=()=>editorProductZoomBy(.1);
+$("editorZoomReset").onclick=()=>{editorProductZoom=1;editorProductApplyZoom()};
+$("editorFullscreen").onclick=()=>{const win=$("editorProductLightbox").querySelector(".editor-product-lightbox-window");win.requestFullscreen?.()};
+$("editorProductLightbox").addEventListener("click",e=>{if(e.target===$("editorProductLightbox"))closeEditorProduct()});
+document.addEventListener("keydown",e=>{
+  const box=$("editorProductLightbox");if(!box.classList.contains("open"))return;
+  if(e.key==="Escape")closeEditorProduct();
+  else if(e.key==="ArrowLeft"){editorProductIndex--;editorProductRender()}
+  else if(e.key==="ArrowRight"){editorProductIndex++;editorProductRender()}
+  else if(e.key==="+"||e.key==="=")editorProductZoomBy(.1);
+  else if(e.key==="-")editorProductZoomBy(-.1);
+  else if(e.key==="0"){editorProductZoom=1;editorProductApplyZoom()}
+});
+
 function generatedCode(){
  const d=data;
  const projects=d.projects.map((p,i)=>`<article class="project"><div class="num">0${i+1}</div><h3>${esc(p.title)}</h3><p>${esc(p.desc)}</p><a href="${esc(p.link||"#")}" target="_blank">VIEW PROJECT ↗</a></article>`).join("");
@@ -1009,22 +1055,47 @@ nav{
 .contact h2{font:600 28px "Space Grotesk"}.contact p{color:#858e9e;font-size:13px;margin-top:5px}.social{display:flex;gap:18px;margin-top:20px;flex-wrap:wrap}
 .footer{text-align:center;border-top:1px solid #ffffff12;padding:25px;color:#646d7c;font-size:10px}
 
-.product-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .2s}
-.product-lightbox.open{display:flex;opacity:1}
-.product-lightbox-window{width:min(1120px,95vw);height:min(90vh,860px);display:flex;flex-direction:column;align-items:center;position:relative}
-.product-lightbox-close{position:absolute;right:0;top:-2px;width:44px;height:44px;border:1px solid #ffffff15;background:rgba(255,255,255,.08);color:#fff;border-radius:50%;font-size:27px;z-index:4;display:grid;place-items:center}
-.product-lightbox-stage{width:100%;flex:1;min-height:0;display:grid;grid-template-columns:54px minmax(0,1fr) 54px;align-items:center;gap:15px}
-.product-lightbox-main{height:100%;min-height:0;display:flex;align-items:center;justify-content:center}
-.product-lightbox-main img{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border-radius:12px;box-shadow:0 30px 100px rgba(0,0,0,.7)}
-.product-lightbox-main .no-image{width:min(680px,76vw);height:min(62vh,620px);display:grid;place-items:center;border:1px solid #ffffff12;border-radius:15px;background:#11151d;font-size:72px;color:#303746}
-.product-lightbox-arrow{width:50px;height:68px;border:1px solid #ffffff20;border-radius:14px;background:rgba(255,255,255,.05);color:#fff;font-size:32px;display:grid;place-items:center}
-.product-lightbox-info{text-align:center;margin:10px 55px 8px;max-width:760px}.product-lightbox-info h3{font-size:clamp(18px,2.2vw,28px)}
-.product-lightbox-info p{color:#8d96a5;font-size:11px;max-width:700px;margin:auto}.product-lightbox-info .price{color:var(--accent2);font-weight:700;margin-top:6px}
-.product-lightbox-info a{display:inline-block;color:#fff;text-decoration:none;font-size:10px;border:1px solid #ffffff18;padding:8px 12px;border-radius:9px;margin-top:9px}
-.product-lightbox-thumbs{width:100%;display:flex;gap:8px;justify-content:center;overflow-x:auto;padding:8px 3px 2px}
-.product-lightbox-thumb{flex:0 0 70px;height:52px;border:1px solid #ffffff18;border-radius:8px;overflow:hidden;background:#11151d;padding:0;opacity:.55}
-.product-lightbox-thumb.active,.product-lightbox-thumb:hover{opacity:1;border-color:var(--accent)}
-.product-lightbox-thumb img{width:100%;height:100%;object-fit:contain}.product-lightbox-thumb span{display:grid;place-items:center;width:100%;height:100%;color:#394151}
+
+ /* Product presentation: 4 columns on desktop/laptop, 3 on smaller laptops, 2 on compact screens, 1 on phones. */
+ .product-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .product-card{min-height:0}
+ .product-image{height:auto;aspect-ratio:1/1}
+ @media(max-width:1050px) and (min-width:901px){.product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+ @media(max-width:900px) and (min-width:621px){.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.product-lightbox{position:fixed;inset:0;background:rgba(2,3,6,.92);backdrop-filter:blur(24px) saturate(1.15);-webkit-backdrop-filter:blur(24px) saturate(1.15);z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;opacity:0;transition:opacity .22s}
+ .product-lightbox.open{display:flex;opacity:1}
+ .product-lightbox-window{width:min(1180px,96vw);height:min(92vh,900px);display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;gap:12px;position:relative;padding:14px;border:1px solid #ffffff16;border-radius:24px;background:linear-gradient(145deg,rgba(15,18,25,.97),rgba(7,9,13,.97));box-shadow:0 35px 120px rgba(0,0,0,.72),0 0 0 1px rgba(255,255,255,.02) inset}
+ .product-lightbox-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px}
+ .product-lightbox-badge{font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#8f99aa}
+ .product-lightbox-tools{display:flex;align-items:center;gap:6px}
+ .product-lightbox-tool,.product-lightbox-close{width:38px;height:38px;border:1px solid #ffffff14;background:#ffffff08;color:#fff;border-radius:10px;display:grid;place-items:center;font-size:15px;transition:.18s}
+ .product-lightbox-tool:hover,.product-lightbox-close:hover{background:#ffffff12;border-color:#ffffff28;transform:translateY(-1px)}
+ .product-lightbox-close{font-size:22px;border-radius:50%}
+ .product-lightbox-stage{width:100%;min-height:0;display:grid;grid-template-columns:52px minmax(0,1fr) 52px;align-items:center;gap:12px}
+ .product-lightbox-main{height:100%;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px solid #ffffff0d;border-radius:18px;background:radial-gradient(circle at center,#151a23 0,#0b0e14 58%,#080a0e 100%);position:relative}
+ .product-lightbox-main img{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border-radius:14px;transform-origin:center;transition:transform .18s ease;user-select:none;-webkit-user-drag:none}
+ .product-lightbox-main .no-image{width:min(680px,76vw);height:min(62vh,620px);display:grid;place-items:center;border:1px solid #ffffff12;border-radius:15px;background:#11151d;font-size:72px;color:#303746}
+ .product-lightbox-arrow{width:52px;height:72px;border:1px solid #ffffff16;border-radius:15px;background:#ffffff07;color:#fff;font-size:31px;display:grid;place-items:center;transition:.18s}
+ .product-lightbox-arrow:hover{background:#ffffff11;border-color:#ffffff30;transform:translateY(-1px)}
+ .product-lightbox-info{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;text-align:left;padding:4px 6px}
+ .product-lightbox-copy h3{font-size:clamp(18px,2.2vw,28px);line-height:1.1}
+ .product-lightbox-copy p{color:#8d96a5;font-size:11px;line-height:1.55;margin-top:5px;max-width:760px}
+ .product-lightbox-meta{text-align:right;min-width:110px}.product-lightbox-meta .price{color:var(--accent2);font-weight:800;font-size:13px}
+ .product-lightbox-meta a,.product-lightbox-meta button{display:inline-flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:9px;border:1px solid #ffffff18;background:#ffffff08;padding:8px 11px;border-radius:9px;margin-top:7px;cursor:pointer}
+ .product-lightbox-thumbs{width:100%;display:flex;gap:8px;justify-content:flex-start;overflow-x:auto;padding:2px 3px 1px;scrollbar-width:thin}
+ .product-lightbox-thumb{flex:0 0 74px;height:56px;border:1px solid #ffffff14;border-radius:9px;overflow:hidden;background:#11151d;padding:0;opacity:.5;transition:.18s;cursor:pointer}
+ .product-lightbox-thumb.active,.product-lightbox-thumb:hover{opacity:1;border-color:var(--accent);transform:translateY(-1px)}
+ .product-lightbox-thumb img{width:100%;height:100%;object-fit:contain}
+ .product-lightbox-hint{font-size:8px;color:#687283;letter-spacing:.05em;white-space:nowrap}
+ @media(max-width:620px){
+   .product-lightbox{padding:7px}.product-lightbox-window{width:100%;height:96vh;padding:9px;border-radius:18px;gap:8px}
+   .product-lightbox-stage{grid-template-columns:34px minmax(0,1fr) 34px;gap:4px}
+   .product-lightbox-arrow{width:34px;height:54px;border-radius:10px;font-size:23px}
+   .product-lightbox-tool,.product-lightbox-close{width:34px;height:34px}.product-lightbox-close{font-size:20px}
+   .product-lightbox-info{grid-template-columns:1fr;gap:5px}.product-lightbox-meta{text-align:left;min-width:0}.product-lightbox-copy p{font-size:10px}
+   .product-lightbox-hint{display:none}.product-lightbox-thumb{flex-basis:60px;height:48px}
+ }
 
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;text-align:center;padding:70px 25px;min-height:auto}.avatar{width:230px;justify-self:center;grid-row:1}.hero>div:first-child{grid-row:2}
@@ -1447,8 +1518,18 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
 <section class="contact" id="contact"><div><h2>Have a project in mind?</h2><p>${esc(d.email)} · ${esc(d.website)}</p><div class="social">${social}</div></div><a class="btn primary" href="mailto:${esc(d.email)}">Get in touch ↗</a></section>
 </main><footer class="footer">${esc(d.footer)}</footer>
 <div class="product-lightbox" id="productLightbox" aria-hidden="true">
-  <div class="product-lightbox-window">
-    <button class="product-lightbox-close" id="productLightboxClose" aria-label="Close product preview">×</button>
+  <div class="product-lightbox-window" role="dialog" aria-modal="true" aria-label="Product preview">
+    <div class="product-lightbox-top">
+      <span class="product-lightbox-badge">PRODUCT PREVIEW · <span id="productCounter">01 / 01</span></span>
+      <div class="product-lightbox-tools">
+        <span class="product-lightbox-hint">← → navigate · Esc close</span>
+        <button class="product-lightbox-tool" id="productZoomOut" aria-label="Zoom out">−</button>
+        <button class="product-lightbox-tool" id="productZoomReset" aria-label="Reset zoom">100%</button>
+        <button class="product-lightbox-tool" id="productZoomIn" aria-label="Zoom in">＋</button>
+        <button class="product-lightbox-tool" id="productFullscreen" aria-label="Fullscreen">⛶</button>
+        <button class="product-lightbox-close" id="productLightboxClose" aria-label="Close product preview">×</button>
+      </div>
+    </div>
     <div class="product-lightbox-stage">
       <button class="product-lightbox-arrow" id="productPrev" aria-label="Previous product">‹</button>
       <div class="product-lightbox-main" id="productLightboxMain"></div>
@@ -1461,32 +1542,172 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
 
 <script>
 (function(){
- const products=${JSON.stringify(d.products.slice(0,8).map((x,i)=>({title:x.title||"",desc:x.desc||"",price:x.price||"",image:x.image||`${i+1}.png`,link:x.link||"#"})))};
- let index=0;
- const box=document.getElementById("productLightbox"),main=document.getElementById("productLightboxMain"),info=document.getElementById("productLightboxInfo"),thumbs=document.getElementById("productLightboxThumbs");
- function render(){
-   if(!products.length)return;
-   index=(index+products.length)%products.length;
-   const p=products[index];
-   main.innerHTML=p.image?'<img src="'+p.image+'" alt="" onerror="this.style.display=\'none\';this.parentElement.innerHTML=\'<div class=\"no-image\"></div>\'':'<div class="no-image"></div>';
-   const safe=t=>String(t??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
-   info.innerHTML='<h3>'+safe(p.title)+'</h3><p>'+safe(p.desc)+'</p><div class="price">'+safe(p.price)+'</div>'+(p.link&&p.link!="#"?'<a href="'+p.link+'" target="_blank" rel="noopener">VIEW PRODUCT ↗</a>':'');
-   thumbs.innerHTML=products.map((x,i)=>'<button class="product-lightbox-thumb '+(i===index?'active':'')+'" data-i="'+i+'" aria-label="Open '+safe(x.title)+'">'+(x.image?'<img src="'+x.image+'" alt="" onerror="this.style.display=\'none\'">':'<span></span>')+'</button>').join("");
-   thumbs.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{index=+b.dataset.i;render()});
-   const a=thumbs.querySelector(".active");if(a)a.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
- }
- function open(i){index=i;render();box.classList.add("open");box.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
- function close(){box.classList.remove("open");box.setAttribute("aria-hidden","true");document.body.style.overflow=""}
- function move(d){index=(index+d+products.length)%products.length;render()}
- document.querySelectorAll(".product-card").forEach(c=>{c.addEventListener("click",()=>open(+c.dataset.productIndex));c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(+c.dataset.productIndex)}})});
- document.getElementById("productLightboxClose").onclick=close;
- document.getElementById("productPrev").onclick=()=>move(-1);
- document.getElementById("productNext").onclick=()=>move(1);
- box.addEventListener("click",e=>{if(e.target===box)close()});
- document.addEventListener("keydown",e=>{if(!box.classList.contains("open"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1)});
+  const products=${JSON.stringify(d.products.slice(0,8).map((x,i)=>({title:x.title||"",desc:x.desc||"",price:x.price||"",image:x.image||`${i+1}.png`,link:x.link||"#"})))};
+  let index=0, zoom=1;
+  const box=document.getElementById("productLightbox");
+  const win=box.querySelector(".product-lightbox-window");
+  const main=document.getElementById("productLightboxMain");
+  const info=document.getElementById("productLightboxInfo");
+  const thumbs=document.getElementById("productLightboxThumbs");
+  const counter=document.getElementById("productCounter");
+  const zoomReset=document.getElementById("productZoomReset");
+
+  function render(){
+    if(!products.length)return;
+    index=(index+products.length)%products.length;
+    zoom=1;
+    const p=products[index];
+    counter.textContent=String(index+1).padStart(2,"0")+" / "+String(products.length).padStart(2,"0");
+    zoomReset.textContent="100%";
+
+    main.replaceChildren();
+    if(p.image){
+      const img=document.createElement("img");
+      img.src=p.image;
+      img.alt=p.title||"Product";
+      img.draggable=false;
+      img.addEventListener("error",function(){
+        main.replaceChildren();
+        const empty=document.createElement("div");
+        empty.className="no-image";
+        empty.textContent="◈";
+        main.appendChild(empty);
+      },{once:true});
+      main.appendChild(img);
+    }else{
+      const empty=document.createElement("div");
+      empty.className="no-image";
+      empty.textContent="◈";
+      main.appendChild(empty);
+    }
+
+    info.replaceChildren();
+    const copy=document.createElement("div");
+    copy.className="product-lightbox-copy";
+    const h=document.createElement("h3");
+    h.textContent=p.title||"Product";
+    const d=document.createElement("p");
+    d.textContent=p.desc||"";
+    copy.append(h,d);
+
+    const meta=document.createElement("div");
+    meta.className="product-lightbox-meta";
+    const price=document.createElement("div");
+    price.className="price";
+    price.textContent=p.price||"";
+    meta.appendChild(price);
+
+    if(p.link && p.link!=="#"){
+      const a=document.createElement("a");
+      a.href=p.link;
+      a.target="_blank";
+      a.rel="noopener";
+      a.textContent="VIEW PRODUCT ↗";
+      meta.appendChild(a);
+    }
+
+    const dl=document.createElement("button");
+    dl.type="button";
+    dl.textContent="DOWNLOAD IMAGE ↓";
+    dl.onclick=downloadCurrentImage;
+    meta.appendChild(dl);
+    info.append(copy,meta);
+
+    thumbs.replaceChildren();
+    products.forEach((x,i)=>{
+      const b=document.createElement("button");
+      b.className="product-lightbox-thumb"+(i===index?" active":"");
+      b.type="button";
+      b.setAttribute("aria-label","Open "+(x.title||"Product"));
+      if(x.image){
+        const im=document.createElement("img");
+        im.src=x.image;
+        im.alt="";
+        im.loading="lazy";
+        b.appendChild(im);
+      }else{
+        const s=document.createElement("span");
+        s.textContent="◈";
+        b.appendChild(s);
+      }
+      b.onclick=()=>{index=i;render()};
+      thumbs.appendChild(b);
+    });
+    const active=thumbs.querySelector(".active");
+    if(active)active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+  }
+
+  function applyZoom(){
+    const img=main.querySelector("img");
+    if(img)img.style.transform="scale("+zoom+")";
+    zoomReset.textContent=Math.round(zoom*100)+"%";
+  }
+
+  function changeZoom(delta){
+    zoom=Math.min(2.5,Math.max(.6,+(zoom+delta).toFixed(2)));
+    applyZoom();
+  }
+
+  function downloadCurrentImage(){
+    const p=products[index];
+    if(!p || !p.image)return;
+    const a=document.createElement("a");
+    a.href=p.image;
+    const base=(p.title||"product").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")||"product";
+    a.download=base+"-image";
+    a.click();
+  }
+
+  function open(i){
+    index=i;
+    render();
+    box.classList.add("open");
+    box.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+  }
+
+  function close(){
+    box.classList.remove("open");
+    box.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    if(document.fullscreenElement===win)document.exitFullscreen?.();
+  }
+
+  function move(d){
+    index=(index+d+products.length)%products.length;
+    render();
+  }
+
+  document.querySelectorAll(".product-card").forEach(c=>{
+    c.addEventListener("click",()=>open(+c.dataset.productIndex));
+    c.addEventListener("keydown",e=>{
+      if(e.key==="Enter"||e.key===" "){
+        e.preventDefault();
+        open(+c.dataset.productIndex);
+      }
+    });
+  });
+
+  document.getElementById("productLightboxClose").onclick=close;
+  document.getElementById("productPrev").onclick=()=>move(-1);
+  document.getElementById("productNext").onclick=()=>move(1);
+  document.getElementById("productZoomOut").onclick=()=>changeZoom(-.1);
+  document.getElementById("productZoomIn").onclick=()=>changeZoom(.1);
+  document.getElementById("productZoomReset").onclick=()=>{zoom=1;applyZoom()};
+  document.getElementById("productFullscreen").onclick=()=>win.requestFullscreen?.();
+  box.addEventListener("click",e=>{if(e.target===box)close()});
+
+  document.addEventListener("keydown",e=>{
+    if(!box.classList.contains("open"))return;
+    if(e.key==="Escape")close();
+    if(e.key==="ArrowLeft")move(-1);
+    if(e.key==="ArrowRight")move(1);
+    if(e.key==="+"||e.key==="=")changeZoom(.1);
+    if(e.key==="-")changeZoom(-.1);
+    if(e.key==="0"){zoom=1;applyZoom();}
+  });
 })();
 <\/script>
-
 
 
 
@@ -1645,52 +1866,6 @@ ${optional("faq","FAQ","Quick answers for prospective clients.",`<div class="faq
 
 </body></html>`;
 }
-
-let lightboxIndex=0;
-function productList(){return (data.products||[]).slice(0,8)}
-function renderProductLightbox(){
- const items=productList(); if(!items.length)return;
- lightboxIndex=(lightboxIndex+items.length)%items.length;
- const x=items[lightboxIndex];
- const box=$("productLightbox"), main=$("productLightboxMain"), info=$("productLightboxInfo"), thumbs=$("productLightboxThumbs");
- const imageSrc=(p,i)=>p.image||`${i+1}.png`;
- const src=imageSrc(x,lightboxIndex);
- main.innerHTML=`<img src="${esc(src)}" alt="${esc(x.title||"Product")}" onerror="this.style.display='none';this.parentElement.innerHTML='<div class="no-image"></div>'`;
- info.innerHTML=`<h3>${esc(x.title||"Product")}</h3><p>${esc(x.desc||"")}</p><div class="price">${esc(x.price||"")}</div>${x.link&&x.link!=="#" ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">VIEW PRODUCT ↗</a>`:""}`;
- thumbs.innerHTML=items.map((p,i)=>`<button class="product-lightbox-thumb ${i===lightboxIndex?"active":""}" data-thumb="${i}" aria-label="Open ${esc(p.title||"Product")}"><img src="${esc(imageSrc(p,i))}" alt="" onerror="this.style.display='none'"></button>`).join("");
- thumbs.querySelectorAll("[data-thumb]").forEach(b=>b.onclick=()=>{lightboxIndex=+b.dataset.thumb;renderProductLightbox()});
- const active=thumbs.querySelector(".active"); if(active)active.scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
-}
-function openProductLightbox(i){
- lightboxIndex=i; renderProductLightbox();
- $("productLightbox").classList.add("open");
- $("productLightbox").setAttribute("aria-hidden","false");
- document.body.style.overflow="hidden";
-}
-function closeProductLightbox(){
- $("productLightbox").classList.remove("open");
- $("productLightbox").setAttribute("aria-hidden","true");
- document.body.style.overflow="";
-}
-function moveProduct(dir){const n=productList().length;if(!n)return;lightboxIndex=(lightboxIndex+dir+n)%n;renderProductLightbox()}
-$("productLightboxClose").onclick=closeProductLightbox;
-$("productPrev").onclick=()=>moveProduct(-1);
-$("productNext").onclick=()=>moveProduct(1);
-$("productLightbox").addEventListener("click",e=>{if(e.target===$("productLightbox"))closeProductLightbox()});
-document.addEventListener("keydown",e=>{
- if(!$("productLightbox").classList.contains("open"))return;
- if(e.key==="Escape")closeProductLightbox();
- if(e.key==="ArrowLeft")moveProduct(-1);
- if(e.key==="ArrowRight")moveProduct(1);
-});
-$("site").addEventListener("click",e=>{
- const card=e.target.closest(".product-card");
- if(card && $("site").contains(card))openProductLightbox(+card.dataset.productIndex);
-});
-$("site").addEventListener("keydown",e=>{
- const card=e.target.closest(".product-card");
- if(card && (e.key==="Enter"||e.key===" ")){e.preventDefault();openProductLightbox(+card.dataset.productIndex)}
-});
 
 $("downloadBtn").onclick=()=>{readInputs();const blob=new Blob([generatedCode()],{type:"text/html;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=(data.name||"portfolio").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"")+"-portfolio.html";a.click();URL.revokeObjectURL(a.href);toast("HTML portfolio downloaded")};
 $("copyBtn").onclick=async()=>{
