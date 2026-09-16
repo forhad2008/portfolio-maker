@@ -414,6 +414,53 @@ body{overscroll-behavior-x:none;}
   .site{max-width:100%;}
 }
 
+
+/* ============================================================
+   DESKTOP EDITOR — MOBILE SECTION PRODUCT LAYOUT FIX
+   When the Desktop editor switches its preview to Mobile,
+   every product card/image stays one-per-row.
+   ============================================================ */
+@media (min-width:761px){
+  #preview.mobile-preview .product-grid,
+  #preview.mobile-preview .product-grid[style]{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) !important;
+    grid-template-rows:none !important;
+    grid-auto-flow:row !important;
+    grid-auto-columns:auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    gap:12px !important;
+  }
+
+  #preview.mobile-preview .product-card{
+    display:flex !important;
+    flex-direction:column !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    grid-column:1 / -1 !important;
+    margin:0 !important;
+  }
+
+  #preview.mobile-preview .product-image{
+    display:grid !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:190px !important;
+    grid-column:1 / -1 !important;
+  }
+
+  #preview.mobile-preview .product-image img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    object-fit:contain !important;
+    grid-column:1 / -1 !important;
+  }
+}
+
 </style>
 
 <style id="portfolio-publish-guide">
