@@ -769,7 +769,7 @@ data.products=data.products||structuredClone(defaultData.products);data.faq=data
 data.enabledSections=data.enabledSections||structuredClone(defaultData.enabledSections);
 
 const $=id=>document.getElementById(id);
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","":"&#039;"}[m]))}
 function initials(n){return (n||"A").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase()}
 function readInputs(){
  ["name","role","headline","bio","email","location","website","cta","instagram","linkedin","github","stat1","stat2","stat3","siteTitle","footer","workTitle","workSubtitle"].forEach(k=>data[k]=$(k).value);
